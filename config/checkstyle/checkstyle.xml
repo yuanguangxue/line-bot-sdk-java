@@ -17,7 +17,7 @@
     <property name="fileExtensions" value="java" />
   </module>
 
-  <module name="NewlineAtEndOfFile" />
+<!--  <module name="NewlineAtEndOfFile" />-->
 
   <module name="FileTabCharacter">
     <property name="eachLine" value="true" />

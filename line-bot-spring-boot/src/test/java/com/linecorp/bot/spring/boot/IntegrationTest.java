@@ -140,8 +140,8 @@ public class IntegrationTest {
         server.enqueue(new MockResponse().setBody("{}"));
         server.enqueue(new MockResponse().setBody("{}"));
 
-        String signature = "ECezgIpQNUEp4OSHYd7xGSuFG7e66MLPkCkK1Y28XTU=";
-
+        //String signature = "ECezgIpQNUEp4OSHYd7xGSuFG7e66MLPkCkK1Y28XTU=";
+        String signature = "HPxJSHi8MkVAL3UulGFyMZ+oNfHT64D/xpFN7XY1DAE=";
         InputStream resource = getClass().getClassLoader().getResourceAsStream("callback-request.json");
         byte[] json = ByteStreams.toByteArray(resource);
 
