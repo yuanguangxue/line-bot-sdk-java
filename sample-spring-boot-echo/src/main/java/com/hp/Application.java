@@ -14,7 +14,9 @@
  * under the License.
  */
 
-package com.example.bot.spring.echo;
+package com.hp;
+
+import com.linecorp.bot.model.event.message.AudioMessageContent;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -29,17 +31,27 @@ import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
 @SpringBootApplication
 @LineMessageHandler
-public class EchoApplication {
+public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(EchoApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
+    /**
+     *
+     * @param event
+     * @return
+     */
     @EventMapping
     public Message handleTextMessageEvent(MessageEvent<TextMessageContent> event) {
         System.out.println("event: " + event);
         final String originalMessageText = event.getMessage().getText();
         return new TextMessage(originalMessageText);
     }
+
+    @EventMapping
+    private void handleVodelMessageEvent(MessageEvent<AudioMessageContent> event){
+    }
+
 
     @EventMapping
     public void handleDefaultMessageEvent(Event event) {

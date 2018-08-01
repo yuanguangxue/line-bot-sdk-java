@@ -119,7 +119,7 @@
     <module name="UnusedImports" />
     <module name="ImportOrder">
       <property name="groups"
-                value="java,javax,org,android,net,/^com\.(?!linecorp\.|nhn\.|nhncorp\.).*$/,com.linecorp,com.nhn,com.nhncorp,jp.naver" />
+                value="java,javax,/^org.*$/,android,net,/^com\.(?!linecorp\.|nhn\.|nhncorp\.).*$/,com.linecorp,com.nhn,com.nhncorp,jp.naver,/^com\n.hp\.*$/" />
       <property name="ordered" value="true" />
       <property name="separated" value="true" />
       <property name="option" value="top" />

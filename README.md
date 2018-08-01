@@ -13,14 +13,14 @@ This is a Java SDK for the LINE Messaging API.
 
 We've uploaded this library to the Maven Central Repository. You can install the modules using Maven or Gradle.
 
-http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.linecorp.bot%22
+[Maven search](http://search.maven.org/#search%7Cga%7C1%7Cg%3A%22com.linecorp.bot%22)
 
 ## About the LINE Messaging API
 
 See the official API documentation for more information.
 
-- English: https://developers.line.me/en/docs/messaging-api/reference/
-- Japanese: https://developers.line.me/ja/docs/messaging-api/reference/
+- [English: ](https://developers.line.me/en/docs/messaging-api/reference/)
+- [Japanese: ](https://developers.line.me/ja/docs/messaging-api/reference/)
 
 ## Spring Boot integration
 
@@ -87,7 +87,7 @@ This project contains the following modules:
 This project contains the following sample projects:
 
  * sample-spring-boot-echo: A simple echo server. It includes a Heroku button.
- * sample-spring-boot-kitchensink: Full featured sample code.
+ * sample-spring-boot-k****************itchensink: Full featured sample code.
 
 ## Requirements
 
@@ -97,7 +97,7 @@ This library requires Java 8 or later.
 
 This project respects semantic versioning.
 
-See http://semver.org/.
+See [semver.org](http://semver.org/).
 
 ## FAQ
 

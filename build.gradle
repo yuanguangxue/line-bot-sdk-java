@@ -54,16 +54,22 @@ if (hasProperty('release')) {
 
 subprojects {
     repositories {
-        mavenCentral();
+        mavenCentral()
     }
 
-    apply plugin: 'com.github.spotbugs'
+
     apply plugin: 'propdeps'
     apply plugin: 'propdeps-maven'
     apply plugin: 'propdeps-idea'
-    apply plugin: 'propdeps-eclipse'
+    //apply plugin: 'propdeps-eclipse'
     apply plugin: 'java'
-    apply plugin: 'checkstyle'
+    if(project.name.startsWith('line-bot-')){
+        apply plugin: 'com.github.spotbugs'
+        apply plugin: 'checkstyle'
+        checkstyle {
+            configProperties = [projectDir: rootProject.projectDir]
+        }
+    }
     apply plugin: 'io.franzbecker.gradle-lombok'
     if (new File("${project.rootDir}/.git").exists()) {
         logger.info("There's .git directory. Create git.properties.")
@@ -160,9 +166,7 @@ subprojects {
         }
     }
 
-    checkstyle {
-        configProperties = [projectDir: rootProject.projectDir]
-    }
+
 
     compileJava {
         options.compilerArgs << '-Xlint:all' << '-Xlint:deprecation' << '-Werror' << '-Xlint:-processing' << '-parameters'
@@ -172,6 +176,11 @@ subprojects {
         bootRun {
             systemProperties System.properties
         }
+    }
+
+    //编译JAVA文件时采用UTF-8
+    tasks.withType(JavaCompile) {
+        options.encoding = "UTF-8"
     }
 }
 

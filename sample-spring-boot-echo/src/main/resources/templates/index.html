@@ -1,0 +1,59 @@
+<html lang="zh">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+        <title>CSS-WeChat Team Suggestion inbox</title>
+        <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}"/>
+        <link rel="stylesheet" th:href="@{/bootstrapvalidator/css/bootstrapValidator.css}"/>
+        <link href="https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.css" rel="stylesheet">
+        <link th:href="@{/css/album.css}" rel="stylesheet">
+        <link th:href="@{/css/app.css}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 order-md-1">
+                    <div class="page-header">
+                        <h2>CSS-WeChat Team 建议箱</h2>
+                    </div>
+                    <form class="form-horizontal" id="suggestionForm" enctype="multipart/form-data" novalidate="" th:action="@{/saveSuggestion}" method="post">
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">标题</label>
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" id="title" name="title" required="" placeholder="请输入意见标题">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">分类</label>
+                            <div class="col-lg-8">
+                                <input class="form-control" id="tag" required="" name="tag" th:attr="data-url=@{/getTags.json}" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-lg-3 control-label">内容</label>
+                            <div class="col-lg-8">
+                                <textarea class="form-control" id="content" name="content" placeholder="请输入意见内容" required=""></textarea>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-lg-8 col-lg-offset-3">
+                                <button id="suggestionButton" class="btn btn-primary btn-block" type="submit">提交</button>
+                                <div class="alert alert-success"></div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </body>
+    <script type="text/javascript" th:src="@{/jquery/jquery.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrapvalidator/js/bootstrapValidator.js}"></script>
+    <script type="text/javascript" th:src="@{/bootstrapvalidator/js/language/zh_CN.js}"></script>
+    <script src="https://cdn.bootcss.com/typeahead.js/0.11.1/typeahead.bundle.js"></script>
+    <script src="https://cdn.bootcss.com/bootstrap-tagsinput/0.8.0/bootstrap-tagsinput.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js" integrity="sha384-FzT3vTVGXqf7wRfy8k4BiyzvbNfeYjK+frTVqZeNDFl8woCbF0CYG6g2fMEFFo/i" crossorigin="anonymous"></script>
+    <script th:src="@{/js/index.js}" ></script>
+</html>
