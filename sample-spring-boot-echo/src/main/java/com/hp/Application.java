@@ -29,6 +29,9 @@ import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.spring.boot.annotation.EventMapping;
 import com.linecorp.bot.spring.boot.annotation.LineMessageHandler;
 
+import javax.annotation.PostConstruct;
+import java.util.TimeZone;
+
 @SpringBootApplication
 @LineMessageHandler
 public class Application {
@@ -36,6 +39,12 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
+
+    @PostConstruct
+    public void setDefaultTimezone() {
+        TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
+//    TimeZone.setDefault(TimeZone.getTimeZone("GMT+8"));
+    }
     /**
      *
      * @param event

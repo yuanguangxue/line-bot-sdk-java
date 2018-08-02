@@ -1,6 +1,7 @@
 package com.hp.web;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.hp.enumerate.ResultCode;
 import com.hp.enumerate.TagEnum;
 import com.hp.model.Result;
 import com.hp.model.Suggestion;
@@ -34,8 +35,12 @@ public class SuggestionController {
     @ResponseBody
     public String saveSuggestion(@Valid Suggestion suggestion) throws JsonProcessingException {
         suggestion.setCreatedAt(new Date());
-        suggestionService.save(suggestion);
-        return Result.success("保存成功！").toJson();
+        try {
+            suggestionService.save(suggestion);
+            return Result.success("保存成功！").toJson();
+        }catch (Exception e){
+            return Result.failure(ResultCode.DATA_IS_WRONG,"保存失败！"+ e.getMessage()).toJson();
+        }
     }
 
     @GetMapping("/getTags.json")

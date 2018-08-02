@@ -7,9 +7,7 @@ import org.apache.commons.lang.StringUtils;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.*;
 
 @Entity
@@ -24,6 +22,8 @@ public class Suggestion {
     @NotBlank
     private String title;
 
+    @Lob
+    @Column(columnDefinition="TEXT")
     @NotBlank
     private String content;
 

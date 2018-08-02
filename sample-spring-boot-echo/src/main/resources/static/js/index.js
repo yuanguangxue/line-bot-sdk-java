@@ -29,7 +29,7 @@ var substringMatcher = function(result) {
 
 $.get(getTagUrl, function(result){
     if(result &&  result.length > 0){
-        elt.tagsinput({
+        /*elt.tagsinput({
             itemValue: function(item){
                 return item;
             },
@@ -48,6 +48,14 @@ $.get(getTagUrl, function(result){
                 valueKey : "value",
                 source : substringMatcher(result)
             }
+        });*/
+        elt.select2({
+            data:$.map(result,function(item){
+                return {
+                    id:item.value,
+                    text:item.text
+                }
+            })
         });
     }
 }, "json");
@@ -115,8 +123,22 @@ form.bootstrapValidator({
     }
 }).on('success.form.bv', function(e) {
     e.preventDefault();
-    form.ajaxSubmit(function (data) {
-        data = eval("(" + data + ")");
-        form.find('.alert').html(data.data).show();
-    });
+    $("#suggestionButton").prop("disabled",true);
+    form.ajaxSubmit({
+        success: function(data){
+             data = eval("(" + data + ")");
+             if(data.code === 1){
+               form.find('.alert').addClass("alert-success").html(data.data).show();
+             }else{
+               form.find('.alert').addClass('alert-danger').html(data.data).show();
+             }
+        },
+        error: function(XmlHttpRequest, textStatus, errorThrown){
+            var json = XmlHttpRequest.responseJSON;
+            if(json){
+                var message = json.message;
+                form.find('.alert').addClass('alert-danger').html(message).show();
+            }
+        }
+    })
 });
