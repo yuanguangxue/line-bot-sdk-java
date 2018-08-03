@@ -13,7 +13,7 @@ public class BootstrapTable<T> {
     private List<T> rows;
 
     public static <T> BootstrapTable<T> to(Page<T> page){
-        BootstrapTable bootstrapTable = new BootstrapTable();
+        BootstrapTable<T> bootstrapTable = new BootstrapTable<>();
         bootstrapTable.setRows(page.getContent());
         bootstrapTable.setTotal((int) page.getTotalElements());
         return bootstrapTable;
