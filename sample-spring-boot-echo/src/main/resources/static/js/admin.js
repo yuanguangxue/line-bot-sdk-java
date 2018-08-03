@@ -57,7 +57,12 @@ $.get(getTagUrl, function(result){
          locale:  'zh-cn'
     });
 
-
+    $("#createdAt_start").on("dp.change", function (e) {
+        $('#createdAt_end').data("DateTimePicker").minDate(e.date);
+    });
+    $("#createdAt_end").on("dp.change", function (e) {
+        $('#createdAt_start').data("DateTimePicker").maxDate(e.date);
+    });
 
     elt.bootstrapTable({ // 对应table标签的id
           height: height,
