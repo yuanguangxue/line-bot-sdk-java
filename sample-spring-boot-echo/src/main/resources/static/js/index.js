@@ -1,54 +1,8 @@
 var elt = $('#tag');
 var getTagUrl = elt.data("url");
 var form = $("#suggestionForm");
-var substringMatcher = function(result) {
-    return function findMatches(q, cb) {
-    //传入的q是键盘输入的字符，传入的cb一个处理数组的函数
-        var matches, substringRegex;
-        matches = [];
-        if(q){
-          try{
-              regex = new RegExp(q,"i");
-              $.each(result, function(i, str) {
-                  if (regex.test(str.text)){
-                      matches.push(str);
-                  }
-              });
-          }catch(e){
-            matches = result;
-          }
-        }else{
-            matches = result;
-        }
-        if(matches.length === 0){
-           matches = result;
-        }
-        cb(matches);
-    }
-};
-
 $.get(getTagUrl, function(result){
     if(result &&  result.length > 0){
-        /*elt.tagsinput({
-            itemValue: function(item){
-                return item;
-            },
-            itemText: function(item){
-                var text = item;
-                $.each(result,function(i,obj){
-                    if(obj.value === item){
-                        text = obj.text;
-                    }
-                });
-                return text
-            },
-            typeaheadjs : {
-                name : "tagsHint",
-                displayKey : "text",
-                valueKey : "value",
-                source : substringMatcher(result)
-            }
-        });*/
         elt.select2({
             data:$.map(result,function(item){
                 return {
@@ -59,23 +13,6 @@ $.get(getTagUrl, function(result){
         });
     }
 }, "json");
-
-var doCheckItem = function(_this){
-    var ele = $(_this).siblings('[data-bv-validator="notEmpty"]');
-    if(ele.length > 0){
-        $(_this).data("bv.result.notEmpty","");
-        form.data("bootstrapValidator").validateField('tag');
-    }
-}
-
-elt.on("itemAddedOnInit",function(){
-  doCheckItem(this);
-}).on("itemAdded",function(){
-  doCheckItem(this);
-}).on("itemRemoved",function(){
-  doCheckItem(this);
-});
-
 form.bootstrapValidator({
     message: '输入值不合法',
     live:"submitted",

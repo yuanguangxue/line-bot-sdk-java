@@ -1,5 +1,6 @@
 package com.hp.service;
 
+import com.hp.model.BootstrapTable;
 import com.hp.model.ExcelData;
 import com.hp.model.Suggestion;
 import com.hp.repository.SuggestionRepository;
@@ -7,6 +8,7 @@ import com.hp.repository.SuggestionRepository;
 import com.hp.util.ExportExcelUtils;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -27,9 +29,17 @@ public class SuggestionService {
         suggestionRepository.save(suggestion);
     }
 
+    public void delete(String id){
+        suggestionRepository.delete(id);
+    }
 
-    public List<Suggestion> findSuggestionPage(final Suggestion suggestion,Pageable pageable){
-        return suggestionRepository.findAll((Specification<Suggestion>) (root, query, cb) -> {
+
+    public Suggestion get(String id){
+        return suggestionRepository.findOne(id);
+    }
+
+    public BootstrapTable<Suggestion> findSuggestionPage(final Suggestion suggestion, Pageable pageable){
+        Page<Suggestion> page = suggestionRepository.findAll((root, query, cb) -> {
             Predicate predicate = cb.conjunction();
             if(StringUtils.isNotBlank(suggestion.getTitle())){
                 predicate = cb.and(predicate,cb.like(root.get("title"),"%"+suggestion.getTitle()+"%"));
@@ -40,15 +50,22 @@ public class SuggestionService {
             if(StringUtils.isNotBlank(suggestion.getTag())){
                 predicate = cb.and(predicate,cb.like(root.get("tag"),"%"+suggestion.getTag()+"%"));
             }
+            if(suggestion.getCreatedAt_start()!=null){
+                predicate = cb.and(predicate,cb.greaterThanOrEqualTo(root.get("createdAt"),suggestion.getCreatedAt_start()));
+            }
+            if(suggestion.getCreatedAt_end()!=null){
+                predicate = cb.and(predicate,cb.lessThanOrEqualTo(root.get("createdAt"),suggestion.getCreatedAt_end()));
+            }
             return predicate;
-        }, pageable).getContent();
+        }, pageable);
+        return BootstrapTable.to(page);
     }
 
 
     public void excel(HttpServletResponse response,final Suggestion suggestion,Pageable pageable) throws Exception {
         final ExcelData data = new ExcelData();
         data.setName("Suggestion");
-        List<Suggestion> list = findSuggestionPage(suggestion,pageable);
+        BootstrapTable<Suggestion> bootstrapTable = findSuggestionPage(suggestion,pageable);
         List<ExcelData.Head> heads = new ArrayList<>();
         ExcelData.Head headTitle = ExcelData.Head.builder().title("标题").length(25).build();
         ExcelData.Head headTag = ExcelData.Head.builder().title("分类").length(25).build();
@@ -61,7 +78,7 @@ public class SuggestionService {
         data.setHeads(heads);
         List<List<Object>> rows = new ArrayList<>();
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        list.forEach(sug -> {
+        bootstrapTable.getRows().forEach(sug -> {
             List<Object> row = new ArrayList<>();
             row.add(sug.getTitle());
             row.add(sug.displayTag());

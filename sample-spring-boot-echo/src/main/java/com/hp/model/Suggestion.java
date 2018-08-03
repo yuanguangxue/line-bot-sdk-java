@@ -33,6 +33,11 @@ public class Suggestion {
     @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
 
+    @Transient
+    private Date createdAt_start;
+
+    @Transient
+    private Date createdAt_end;
 
     public String displayTag(){
         if(StringUtils.isNotBlank(this.tag)){

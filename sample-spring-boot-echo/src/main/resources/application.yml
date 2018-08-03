@@ -43,7 +43,7 @@ spring:
           auto: update
         temp:
           use_jdbc_metadata_defaults: false
-        format_sql: false
+        format_sql: true
   thymeleaf:
       prefix: classpath:/templates/
       suffix: .html
